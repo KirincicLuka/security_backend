@@ -42,5 +42,5 @@ app.post('/api/toggle-encryption', (req, res) => {
 
 const port = process.env.PORT || 5000;
 app.listen(port, "0.0.0.0", () => {
-    console.log(`Server radi na portu ${PORT}`);
+    console.log(`Server radi na portu ${port}`);
 });
