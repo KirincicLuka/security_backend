@@ -40,7 +40,7 @@ app.post('/api/toggle-encryption', (req, res) => {
     res.send({ success: true, encryptionEnabled });
 });
 
-const PORT = 5000;
-app.listen(PORT, () => {
+const port = process.env.PORT || 5000;
+app.listen(port, "0.0.0.0", () => {
     console.log(`Server radi na portu ${PORT}`);
 });
