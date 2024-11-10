@@ -18,20 +18,24 @@ app.get('/', (req, res) => {
 
 let data = "";
 let encryptionEnabled = false;
-const secretKey = 'secret_key'; 
+const secretKey = crypto.randomBytes(32); 
+const iv = crypto.randomBytes(16);  
 
 app.post('/api/save-data', (req, res) => {
     let inputData = req.body.data;
     if (encryptionEnabled) {
-        const cipher = crypto.createCipher('aes-256-cbc', secretKey);
-        inputData = cipher.update(inputData, 'utf8', 'hex') + cipher.final('hex');
+        const cipher = crypto.createCipheriv('aes-256-cbc', secretKey, iv);
+        let encryptedData = cipher.update(inputData, 'utf8', 'hex');
+        encryptedData += cipher.final('hex');
+        inputData = encryptedData;
     }
     data = inputData;
     res.send({ success: true, message: 'Podaci su sačuvani!' });
 });
 
 app.get('/api/get-data', (req, res) => {
-    res.send({ data });
+    let responseData = data;
+    res.send({ data: responseData });
 });
 
 app.post('/api/toggle-encryption', (req, res) => {
