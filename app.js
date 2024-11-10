@@ -5,7 +5,9 @@ const crypto = require('crypto');
 
 const app = express();
 
-app.use(cors()); 
+app.use(cors({
+    origin: 'https://security-frontend-1rih.onrender.com' 
+})); 
 app.use(bodyParser.json()); 
 
 app.get('/', (req, res) => {
